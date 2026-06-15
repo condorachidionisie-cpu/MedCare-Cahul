@@ -86,17 +86,17 @@
                 <form action="https://api.sheetmonkey.io/form/rxbK8JLCgpQ1SKJxHZosoA" method="post" id="contactForm" class="contact-form">
                     <div class="form-group">
                         <label for="c-name">Nume Complet</label>
-                        <input type="text" id="c-name" placeholder="Introduceți numele dvs." required>
+                        <input type="text" id="c-name" name="Nume" placeholder="Introduceți numele dvs." required>
                     </div>
 
                     <div class="form-group">
                         <label for="c-phone">Număr de Telefon</label>
-                        <input type="tel" id="c-phone" placeholder="Introduceți numărul de telefon" required>
+                        <input type="tel" id="c-phone" name="Telefon" placeholder="Introduceți numărul de telefon" required>
                     </div>
 
                     <div class="form-group">
                         <label for="c-message">Mesajul Tău</label>
-                        <textarea id="c-message" rows="5" placeholder="Scrie aici mesajul sau întrebarea ta..." required></textarea>
+                        <textarea id="c-message" name="Mesaj" rows="5" placeholder="Scrie aici mesajul sau întrebarea ta..." required></textarea>
                     </div>
 
                     <button type="submit" class="btn-submit">
@@ -139,10 +139,32 @@
         const successModal = document.getElementById('successModal');
 
         contactForm.addEventListener('submit', function(event) {
-            event.preventDefault(); 
-            successModal.classList.add('show');
-            contactForm.reset();
+            event.preventDefault(); // Oprește reîncărcarea paginii
+
+            const actionUrl = contactForm.getAttribute('action');
+            const formData = new FormData(contactForm); // Colectează automat datele pe baza atributelor 'name'
+
+            // Trimite datele către Sheet Monkey în fundal (Asincron)
+            fetch(actionUrl, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Dacă trimiterea a reușit, deschide modalul și resetează câmpurile
+                    successModal.classList.add('show');
+                    contactForm.reset();
+                } else {
+                    alert('A apărut o problemă la trimiterea datelor. Te rugăm să încerci din nou.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Eroare de rețea. Te rugăm să verifici conexiunea la internet.');
+            });
         });
+
+        // Închidere modal la click pe fundalul întunecat
         successModal.addEventListener('click', function(event) {
             if (event.target === successModal) {
                 successModal.classList.remove('show');
