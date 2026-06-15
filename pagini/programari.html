@@ -126,19 +126,18 @@
         const successModal = document.getElementById('successModal');
 
         appointmentForm.addEventListener('submit', function(event) {
-            event.preventDefault(); // Oprește reîncărcarea paginii
+            event.preventDefault();
 
             const actionUrl = appointmentForm.getAttribute('action');
-            const formData = new FormData(appointmentForm); // Colectează toate datele pe baza atributelor 'name'
+            const formData = new FormData(appointmentForm); 
 
-            // Trimitem datele asincron către Sheet Monkey
             fetch(actionUrl, {
                 method: 'POST',
                 body: formData
             })
             .then(response => {
                 if (response.ok) {
-                    // Dacă API-ul a primit datele cu succes, arătăm pop-up-ul și resetăm formularul
+
                     successModal.classList.add('show');
                     appointmentForm.reset();
                 } else {
@@ -151,7 +150,6 @@
             });
         });
 
-        // Închidere modal la click în afara cutiei albe (pe fundalul întunecat)
         successModal.addEventListener('click', function(event) {
             if (event.target === successModal) {
                 successModal.classList.remove('show');
