@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programări - MedCare Cahul</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <a href="../index.html" class="logo">
+            <img src="../assets/images/Logo.png" alt="MedCare Cahul Logo">
+            <span class="logo-text">MedCare <span class="logo-accent">Cahul</span></span>
+        </a>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="../index.html">Acasă</a></li>
+                <li><a href="servicii.html">Servicii</a></li>
+                <li><a href="medici.html">Medici</a></li>
+                <li><a href="programari.html" class="active">Programări</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+        <a href="programari.html" class="btn-header">Programare Rapidă</a>
+    </header>
+
+    <section class="section-title">
+        <h1>Programare Online</h1>
+        <p>Completează formularul de mai jos pentru a solicita o programare. Vei fi contactat telefonic în cel mai scurt timp pentru confirmarea datei și a orei exacte.</p>
+    </section>
+
+    <section class="appointment-section">
+        <div class="appointment-container">
+            <div class="appointment-form-box">
+                <h3>Completează detaliile vizitei</h3>
+                <form id="appointmentForm" class="contact-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="p-name">Nume Complet</label>
+                            <input type="text" id="p-name" placeholder="Ex: Andrei Moraru" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="p-phone">Număr Telefon</label>
+                            <input type="tel" id="p-phone" placeholder="Ex: +373 600 00 000" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="p-email">Adresă Email</label>
+                            <input type="email" id="p-email" placeholder="Ex: andrei@gmail.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="p-specialty">Specialitate Medicală</label>
+                            <select id="p-specialty" required>
+                                <option value="">Selectează specialitatea...</option>
+                                <option value="cardiologie">Cardiologie</option>
+                                <option value="pediatrie">Pediatrie</option>
+                                <option value="neurologie">Neurologie</option>
+                                <option value="oftalmologie">Oftalmologie</option>
+                                <option value="ginecologie">Ginecologie</option>
+                                <option value="dermatologie">Dermatologie</option>
+                                <option value="endocrinologie">Endocrinologie</option>
+                                <option value="laborator">Analize de Laborator</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="p-date">Data Preferată</label>
+                            <input type="date" id="p-date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="p-time">Interval Orar Preferat</label>
+                            <select id="p-time" required>
+                                <option value="dimineata">Dimineață (08:00 - 12:00)</option>
+                                <option value="pranz">Prânz (12:00 - 15:00)</option>
+                                <option value="dupa-amiaza">După-amiază (15:00 - 18:00)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="p-notes">Mențiuni sau Simptome (Opțional)</label>
+                        <textarea id="p-notes" rows="3" placeholder="Dacă dorești, descrie pe scurt motivul vizitei..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit">Trimite Cererea de Programare <i class="fa-solid fa-calendar-check"></i></button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-contacts">
+                <a href="tel:+373079351803"><i class="fa-solid fa-phone"></i> +373 079 351 803</a>
+                <a href="mailto:condorachi.dionisie@elev.cihcahul.md"><i class="fa-solid fa-envelope"></i> condorachi.dionisie@elev.cihcahul.md</a>
+            </div>
+            <div class="footer-socials">
+                <a href="https://facebook.com" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <p>© 2026 MedCare Cahul. Toate drepturile rezervate. Creat cu profesionalism.</p>
+        </div>
+    </footer>
+
+    <div id="successModal" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-icon">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <h2>Cerere înregistrată!</h2>
+            <p>Îți mulțumim pentru încredere. Echipa noastră te va contacta în scurt timp pentru validarea programării.</p>
+            <a href="../index.html" class="btn-modal-home">Înapoi Acasă</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('appointmentForm').addEventListener('submit', function(event) {
+            event.preventDefault(); 
+            document.getElementById('successModal').classList.add('show');
+            document.getElementById('appointmentForm').reset();
+        });
+    </script>
+
+</body>
+</html>
