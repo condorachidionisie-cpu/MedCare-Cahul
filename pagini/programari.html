@@ -35,26 +35,26 @@
         <div class="appointment-container">
             <div class="appointment-form-box">
                 <h3>Completează detaliile vizitei</h3>
-                <form id="appointmentForm" class="contact-form">
+                <form action="https://api.sheetmonkey.io/form/rxbK8JLCgpQ1SKJxHZosoA" method="post" id="appointmentForm" class="contact-form">
                     <div class="form-row">
                         <div class="form-group">
                             <label for="p-name">Nume Complet</label>
-                            <input type="text" id="p-name" placeholder="Ex: Andrei Moraru" required>
+                            <input type="text" id="p-name" name="Nume" placeholder="Ex: Andrei Moraru" required>
                         </div>
                         <div class="form-group">
                             <label for="p-phone">Număr Telefon</label>
-                            <input type="tel" id="p-phone" placeholder="Ex: +373 600 00 000" required>
+                            <input type="tel" id="p-phone" name="Telefon" placeholder="Ex: +373 600 00 000" required>
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group">
                             <label for="p-email">Adresă Email</label>
-                            <input type="email" id="p-email" placeholder="Ex: andrei@gmail.com" required>
+                            <input type="email" id="p-email" name="Email" placeholder="Ex: andrei@gmail.com" required>
                         </div>
                         <div class="form-group">
                             <label for="p-specialty">Specialitate Medicală</label>
-                            <select id="p-specialty" required>
+                            <select id="p-specialty" name="Specialitate" required>
                                 <option value="">Selectează specialitatea...</option>
                                 <option value="cardiologie">Cardiologie</option>
                                 <option value="pediatrie">Pediatrie</option>
@@ -71,11 +71,11 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="p-date">Data Preferată</label>
-                            <input type="date" id="p-date" required>
+                            <input type="date" id="p-date" name="Data Preferata" required>
                         </div>
                         <div class="form-group">
                             <label for="p-time">Interval Orar Preferat</label>
-                            <select id="p-time" required>
+                            <select id="p-time" name="Interval Orar" required>
                                 <option value="dimineata">Dimineață (08:00 - 12:00)</option>
                                 <option value="pranz">Prânz (12:00 - 15:00)</option>
                                 <option value="dupa-amiaza">După-amiază (15:00 - 18:00)</option>
@@ -85,7 +85,7 @@
 
                     <div class="form-group">
                         <label for="p-notes">Mențiuni sau Simptome (Opțional)</label>
-                        <textarea id="p-notes" rows="3" placeholder="Dacă dorești, descrie pe scurt motivul vizitei..."></textarea>
+                        <textarea id="p-notes" name="Mentiuni" rows="3" placeholder="Dacă dorești, descrie pe scurt motivul vizitei..."></textarea>
                     </div>
 
                     <button type="submit" class="btn-submit">Trimite Cererea de Programare <i class="fa-solid fa-calendar-check"></i></button>
@@ -122,10 +122,40 @@
     </div>
 
     <script>
-        document.getElementById('appointmentForm').addEventListener('submit', function(event) {
-            event.preventDefault(); 
-            document.getElementById('successModal').classList.add('show');
-            document.getElementById('appointmentForm').reset();
+        const appointmentForm = document.getElementById('appointmentForm');
+        const successModal = document.getElementById('successModal');
+
+        appointmentForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Oprește reîncărcarea paginii
+
+            const actionUrl = appointmentForm.getAttribute('action');
+            const formData = new FormData(appointmentForm); // Colectează toate datele pe baza atributelor 'name'
+
+            // Trimitem datele asincron către Sheet Monkey
+            fetch(actionUrl, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Dacă API-ul a primit datele cu succes, arătăm pop-up-ul și resetăm formularul
+                    successModal.classList.add('show');
+                    appointmentForm.reset();
+                } else {
+                    alert('A apărut o eroare la salvarea programării. Te rugăm să încerci din nou.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Eroare de rețea. Verifică conexiunea la internet.');
+            });
+        });
+
+        // Închidere modal la click în afara cutiei albe (pe fundalul întunecat)
+        successModal.addEventListener('click', function(event) {
+            if (event.target === successModal) {
+                successModal.classList.remove('show');
+            }
         });
     </script>
 
