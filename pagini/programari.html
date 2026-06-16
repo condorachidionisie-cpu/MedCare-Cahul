@@ -14,7 +14,12 @@
             <img src="../assets/images/Logo.png" alt="MedCare Cahul Logo">
             <span class="logo-text">MedCare <span class="logo-accent">Cahul</span></span>
         </a>
-        <nav>
+        
+        <button class="menu-toggle" id="mobileMenuBtn" aria-label="Deschide meniul">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <nav id="navMenu">
             <ul class="nav-links">
                 <li><a href="../index.html">Acasă</a></li>
                 <li><a href="servicii.html">Servicii</a></li>
@@ -123,6 +128,22 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const navMenu = document.getElementById('navMenu');
+
+            if (mobileMenuBtn && navMenu) {
+                mobileMenuBtn.addEventListener('click', function () {
+                    navMenu.classList.toggle('active');
+                    
+                    const icon = mobileMenuBtn.querySelector('i');
+                    if (navMenu.classList.contains('active')) {
+                        icon.className = 'fa-solid fa-xmark';
+                    } else {
+                        icon.className = 'fa-solid fa-bars';
+                    }
+                });
+            }
+
             const form = document.getElementById('appointmentForm');
             const modal = document.getElementById('successModal');
 
@@ -133,7 +154,6 @@
                     const url = form.action;
                     const formData = new FormData(form);
                     
-                    // Transformăm datele din formular într-un obiect JSON simplu
                     const object = {};
                     formData.forEach((value, key) => object[key] = value);
                     const json = JSON.stringify(object);
