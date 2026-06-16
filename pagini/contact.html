@@ -48,7 +48,7 @@
                     <i class="fa-solid fa-phone"></i>
                     <div>
                         <h4>Telefon Contact</h4>
-                        <p>+373 299 00 000</p>
+                        <p> 299 00 000</p>
                     </div>
                 </div>
 
@@ -139,19 +139,17 @@
         const successModal = document.getElementById('successModal');
 
         contactForm.addEventListener('submit', function(event) {
-            event.preventDefault(); // Oprește reîncărcarea paginii
+            event.preventDefault();
 
             const actionUrl = contactForm.getAttribute('action');
-            const formData = new FormData(contactForm); // Colectează automat datele pe baza atributelor 'name'
+            const formData = new FormData(contactForm); 
 
-            // Trimite datele către Sheet Monkey în fundal (Asincron)
             fetch(actionUrl, {
                 method: 'POST',
                 body: formData
             })
             .then(response => {
                 if (response.ok) {
-                    // Dacă trimiterea a reușit, deschide modalul și resetează câmpurile
                     successModal.classList.add('show');
                     contactForm.reset();
                 } else {
@@ -164,7 +162,6 @@
             });
         });
 
-        // Închidere modal la click pe fundalul întunecat
         successModal.addEventListener('click', function(event) {
             if (event.target === successModal) {
                 successModal.classList.remove('show');
