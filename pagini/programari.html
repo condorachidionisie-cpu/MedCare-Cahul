@@ -133,7 +133,6 @@
                     const url = form.action;
                     const formData = new FormData(form);
                     
-                    // Transformăm datele din formular într-un obiect JSON simplu
                     const object = {};
                     formData.forEach((value, key) => object[key] = value);
                     const json = JSON.stringify(object);
