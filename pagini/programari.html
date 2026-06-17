@@ -35,9 +35,9 @@
         <div class="appointment-container">
             <div class="appointment-form-box">
                 <h3>Completează detaliile vizitei</h3>
-                <form action="https://api.web3forms.com/submit" method="POST" id="appointmentForm" class="contact-form">
-                    
-                    <input type="hidden" name="access_key" value="75ba4faa-db03-40a6-b93c-b6ce8aee8691">
+                <form action="https://api.sheetmonkey.io/form/rxbK8JLCgpQ1SKJxHZosoA" method="POST" id="appointmentForm" class="contact-form">
+
+                    <input type="hidden" name="Tip_Formular" value="Programare">
 
                     <div class="form-row">
                         <div class="form-group">
@@ -125,48 +125,36 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const form = document.getElementById('appointmentForm');
-            const modal = document.getElementById('successModal');
+        const appointmentForm = document.getElementById('appointmentForm');
+        const successModal = document.getElementById('successModal');
 
-            if (form && modal) {
-                form.addEventListener('submit', function (event) {
-                    event.preventDefault();
+        appointmentForm.addEventListener('submit', function(event) {
+            event.preventDefault();
 
-                    const url = form.action;
-                    const formData = new FormData(form);
-                    
-                    const object = {};
-                    formData.forEach((value, key) => object[key] = value);
-                    const json = JSON.stringify(object);
+            const actionUrl = appointmentForm.getAttribute('action');
+            const formData = new FormData(appointmentForm);
 
-                    fetch(url, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json'
-                        },
-                        body: json
-                    })
-                    .then(function (response) {
-                        if (response.ok) {
-                            modal.classList.add('show');
-                            form.reset();
-                        } else {
-                            alert('A apărut o problemă la serverul Web3Forms. Status: ' + response.status);
-                        }
-                    })
-                    .catch(function (error) {
-                        console.error(error);
-                        alert('Eroare de conexiune. Verifică internetul.');
-                    });
-                });
+            fetch(actionUrl, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    successModal.classList.add('show');
+                    appointmentForm.reset();
+                } else {
+                    alert('A apărut o problemă la trimiterea datelor. Te rugăm să încerci din nou.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Eroare de rețea. Te rugăm să verifici conexiunea la internet.');
+            });
+        });
 
-                modal.addEventListener('click', function (e) {
-                    if (e.target === modal) {
-                        modal.classList.remove('show');
-                    }
-                });
+        successModal.addEventListener('click', function(event) {
+            if (event.target === successModal) {
+                successModal.classList.remove('show');
             }
         });
     </script>
